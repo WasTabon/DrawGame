@@ -6,6 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  m_configObjects: {}
+    path: Assets/DrawGame/Scenes/Bootstrap.unity
+    guid: 5645c4f0b6ce367419bdd7dfb76d243d
+  - enabled: 1
+    path: Assets/DrawGame/Scenes/MainMenu.unity
+    guid: 4bfc5f9ffb9657a45a889bae2f78827a
+  - enabled: 1
+    path: Assets/DrawGame/Scenes/Game.unity
+    guid: 32dda677c030ca74f8dea52fad65ea92
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 0950f0698b6faf440af2480fb1193f96, type: 2}

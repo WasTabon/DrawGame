@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Music
+  m_EditorClassIdentifier: 
+  m_GroupName: Music
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c284af8505a7a5a45a385ca3bb884a31
+  m_SerializeEntries:
+  - m_GUID: 8b43338c1b10aff4093c1648ce052e70
+    m_Address: GameMusic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - music
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 19e148b9739605a4b815a6c1cdb46998, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4ef27ca7fda748946bcb03f99bcc2bbb, type: 2}
+    - {fileID: 11400000, guid: 762eacad915669c4cb8fbcc275daed64, type: 2}
