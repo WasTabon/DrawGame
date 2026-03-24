@@ -45,6 +45,8 @@ public class DrawnLine : MonoBehaviour
         lineRenderer.startColor = frozenColor;
         lineRenderer.endColor = frozenColor;
 
+        RecenterToLineCenter();
+
         var edgeCollider = gameObject.AddComponent<EdgeCollider2D>();
         edgeCollider.points = points.ToArray();
         if (physicsMaterial != null)
@@ -57,6 +59,29 @@ public class DrawnLine : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         AnimateFreeze();
+    }
+
+    private void RecenterToLineCenter()
+    {
+        Vector2 center = Vector2.zero;
+        for (int i = 0; i < points.Count; i++)
+        {
+            center += points[i];
+        }
+        center /= points.Count;
+
+        transform.position = new Vector3(center.x, center.y, 0f);
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            points[i] -= center;
+        }
+
+        lineRenderer.positionCount = points.Count;
+        for (int i = 0; i < points.Count; i++)
+        {
+            lineRenderer.SetPosition(i, new Vector3(points[i].x, points[i].y, 0f));
+        }
     }
 
     private float CalculateMass()
