@@ -70,15 +70,15 @@ public class Iteration4_GameSceneUpdate
         levelRoot = new GameObject("LevelObjects");
 
         var platform = CreatePlatform(levelRoot.transform, "Platform",
-            new Vector2(0f, -1f), new Vector2(4f, 0.3f),
+            new Vector2(-0.5f, -1f), new Vector2(3f, 0.3f),
             new Color(0.4f, 0.4f, 0.45f, 1f));
 
         var ball = CreateBall(levelRoot.transform, "Ball",
-            new Vector2(0f, 0.5f), 0.4f,
+            new Vector2(-0.5f, 0.5f), 0.4f,
             new Color(1f, 0.5f, 0.2f, 1f), true);
 
         var goalZone = CreateGoalZone(levelRoot.transform, "GoalZone",
-            new Vector2(3f, -3.5f), new Vector2(2f, 1.5f),
+            new Vector2(1.2f, -3.5f), new Vector2(1.5f, 1.2f),
             new Color(0.2f, 0.9f, 0.3f, 0.4f));
 
         var so = new SerializedObject(levelController);
