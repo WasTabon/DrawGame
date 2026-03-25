@@ -10,9 +10,15 @@ public class LevelSpawner : MonoBehaviour
     private GameObject levelRoot;
     private List<LevelObject> spawnedObjects = new List<LevelObject>();
     private GoalZone spawnedGoalZone;
+    private LevelData currentLevelData;
 
     public GoalZone CurrentGoalZone => spawnedGoalZone;
     public LevelObject[] SpawnedObjects => spawnedObjects.ToArray();
+
+    public LevelData GetCurrentLevelData()
+    {
+        return currentLevelData;
+    }
 
     private void Awake()
     {
@@ -38,6 +44,7 @@ public class LevelSpawner : MonoBehaviour
             return;
         }
 
+        currentLevelData = data;
         levelRoot = new GameObject("LevelObjects");
 
         if (data.objects != null)

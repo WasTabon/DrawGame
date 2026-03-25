@@ -38,6 +38,8 @@ public class LevelData : ScriptableObject
 {
     public int levelNumber;
     public int maxLines = 3;
+    public int idealLines = 1;
+    public float idealTime = 15f;
     public LevelObjectData[] objects;
     public GoalZoneData goalZone;
 }

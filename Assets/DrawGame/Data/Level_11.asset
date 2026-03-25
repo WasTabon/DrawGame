@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 11
   maxLines: 3
+  idealLines: 1
+  idealTime: 10
   objects:
   - name: Platform
     objectType: 0

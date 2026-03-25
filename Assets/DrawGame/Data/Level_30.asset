@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 30
   maxLines: 2
+  idealLines: 2
+  idealTime: 10
   objects:
   - name: CupLeft
     objectType: 0

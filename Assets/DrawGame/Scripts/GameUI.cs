@@ -13,6 +13,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelCompleteText;
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button winRestartButton;
+    [SerializeField] private TextMeshProUGUI[] starTexts;
 
     private void OnEnable()
     {
@@ -34,6 +35,7 @@ public class GameUI : MonoBehaviour
         Debug.Assert(levelCompleteText != null, "GameUI: levelCompleteText not assigned!");
         Debug.Assert(nextLevelButton != null, "GameUI: nextLevelButton not assigned!");
         Debug.Assert(winRestartButton != null, "GameUI: winRestartButton not assigned!");
+        Debug.Assert(starTexts != null && starTexts.Length == 3, "GameUI: starTexts must have 3 elements!");
 
         backButton.onClick.AddListener(OnBackClicked);
         restartButton.onClick.AddListener(OnRestartClicked);
@@ -101,9 +103,9 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    private void HandleLevelComplete()
+    private void HandleLevelComplete(int stars)
     {
-        ShowLevelComplete();
+        ShowLevelComplete(stars);
     }
 
     private void HandleLevelReset()
@@ -113,7 +115,7 @@ public class GameUI : MonoBehaviour
         UpdateLineCount(0, DrawingManager.Instance != null ? DrawingManager.Instance.MaxLines : 5);
     }
 
-    private void ShowLevelComplete()
+    private void ShowLevelComplete(int stars)
     {
         levelCompleteText.text = "LEVEL COMPLETE!";
         levelCompletePanel.gameObject.SetActive(true);
@@ -126,11 +128,40 @@ public class GameUI : MonoBehaviour
         textRect.localScale = Vector3.one * 0.5f;
         textRect.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
 
+        AnimateStars(stars);
+
         nextLevelButton.transform.localScale = Vector3.zero;
-        nextLevelButton.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetDelay(0.3f);
+        nextLevelButton.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetDelay(0.6f + stars * 0.2f);
 
         winRestartButton.transform.localScale = Vector3.zero;
-        winRestartButton.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetDelay(0.4f);
+        winRestartButton.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetDelay(0.7f + stars * 0.2f);
+    }
+
+    private void AnimateStars(int count)
+    {
+        Color activeColor = new Color(1f, 0.85f, 0.2f, 1f);
+        Color inactiveColor = new Color(0.4f, 0.4f, 0.4f, 0.5f);
+
+        for (int i = 0; i < starTexts.Length; i++)
+        {
+            var star = starTexts[i];
+            star.transform.localScale = Vector3.zero;
+
+            bool earned = i < count;
+            star.color = earned ? activeColor : inactiveColor;
+
+            float delay = 0.4f + i * 0.2f;
+            star.transform.DOScale(earned ? Vector3.one * 1.3f : Vector3.one * 0.8f, 0.35f)
+                .SetEase(Ease.OutBack)
+                .SetDelay(delay)
+                .OnComplete(() =>
+                {
+                    if (earned)
+                    {
+                        star.transform.DOScale(Vector3.one, 0.15f).SetEase(Ease.InOutQuad);
+                    }
+                });
+        }
     }
 
     private void HideLevelCompleteImmediate()
@@ -138,6 +169,15 @@ public class GameUI : MonoBehaviour
         levelCompletePanel.alpha = 0f;
         levelCompletePanel.interactable = false;
         levelCompletePanel.blocksRaycasts = false;
+
+        if (starTexts != null)
+        {
+            foreach (var star in starTexts)
+            {
+                if (star != null)
+                    star.transform.localScale = Vector3.zero;
+            }
+        }
     }
 
     private void OnBackClicked()

@@ -6,7 +6,7 @@ public class LevelController : MonoBehaviour
 {
     public static LevelController Instance { get; private set; }
 
-    public event Action OnLevelComplete;
+    public event Action<int> OnLevelComplete;
     public event Action OnLevelReset;
 
     public bool IsComplete { get; private set; }
@@ -15,9 +15,11 @@ public class LevelController : MonoBehaviour
     private LevelObject[] levelObjects;
     private float completionTime;
     private float levelStartTime;
+    private int earnedStars;
 
     public float CompletionTime => completionTime;
     public int LinesUsed => DrawingManager.Instance != null ? DrawingManager.Instance.CurrentLineCount : 0;
+    public int EarnedStars => earnedStars;
 
     private void Awake()
     {
@@ -34,6 +36,7 @@ public class LevelController : MonoBehaviour
         goalZone = newGoalZone;
         levelObjects = newLevelObjects;
         IsComplete = false;
+        earnedStars = 0;
         levelStartTime = Time.time;
         completionTime = 0f;
 
@@ -68,20 +71,37 @@ public class LevelController : MonoBehaviour
         }
 
         int level = GameManager.Instance != null ? GameManager.Instance.SelectedLevel : 1;
+
+        int idealLines = 1;
+        float idealTime = 15f;
+        if (LevelSpawner.Instance != null)
+        {
+            var db = LevelSpawner.Instance.GetCurrentLevelData();
+            if (db != null)
+            {
+                idealLines = db.idealLines;
+                idealTime = db.idealTime;
+            }
+        }
+
+        earnedStars = StarRating.Calculate(LinesUsed, completionTime, idealLines, idealTime);
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.UnlockNextLevel(level);
+            GameManager.Instance.SetStars(level, earnedStars);
         }
 
         DOVirtual.DelayedCall(0.5f, () =>
         {
-            OnLevelComplete?.Invoke();
+            OnLevelComplete?.Invoke(earnedStars);
         });
     }
 
     public void ResetLevel()
     {
         IsComplete = false;
+        earnedStars = 0;
         levelStartTime = Time.time;
         completionTime = 0f;
 

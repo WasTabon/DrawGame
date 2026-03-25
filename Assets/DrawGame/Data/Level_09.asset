@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNumber: 9
   maxLines: 2
+  idealLines: 1
+  idealTime: 9
   objects:
   - name: RampPlatform
     objectType: 0
