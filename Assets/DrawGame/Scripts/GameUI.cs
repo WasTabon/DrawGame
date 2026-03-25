@@ -124,13 +124,11 @@ public class GameUI : MonoBehaviour
     {
         int count = HintManager.Instance != null ? HintManager.Instance.HintCount : 0;
         hintCountText.text = count.ToString();
-        hintButton.interactable = count > 0;
     }
 
     private void HandleHintCountChanged(int newCount)
     {
         hintCountText.text = newCount.ToString();
-        hintButton.interactable = newCount > 0;
     }
 
     private void HandleLevelComplete(int stars)
@@ -264,7 +262,14 @@ public class GameUI : MonoBehaviour
 
         if (HintManager.Instance.HintCount <= 0)
         {
-            hintButton.transform.DOShakePosition(0.3f, 5f, 15).SetEase(Ease.OutQuad);
+            if (IAPManager.Instance != null)
+            {
+                IAPManager.Instance.Show();
+            }
+            else
+            {
+                hintButton.transform.DOShakePosition(0.3f, 5f, 15).SetEase(Ease.OutQuad);
+            }
             return;
         }
 
