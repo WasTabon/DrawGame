@@ -11,6 +11,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lineCountText;
     [SerializeField] private CanvasGroup levelCompletePanel;
     [SerializeField] private TextMeshProUGUI levelCompleteText;
+    [SerializeField] private Button nextLevelButton;
+    [SerializeField] private Button winRestartButton;
 
     private void OnEnable()
     {
@@ -30,17 +32,17 @@ public class GameUI : MonoBehaviour
         Debug.Assert(lineCountText != null, "GameUI: lineCountText not assigned!");
         Debug.Assert(levelCompletePanel != null, "GameUI: levelCompletePanel not assigned!");
         Debug.Assert(levelCompleteText != null, "GameUI: levelCompleteText not assigned!");
+        Debug.Assert(nextLevelButton != null, "GameUI: nextLevelButton not assigned!");
+        Debug.Assert(winRestartButton != null, "GameUI: winRestartButton not assigned!");
 
         backButton.onClick.AddListener(OnBackClicked);
         restartButton.onClick.AddListener(OnRestartClicked);
-
-        if (GameManager.Instance != null)
-        {
-            levelText.text = "Level " + GameManager.Instance.SelectedLevel;
-        }
+        nextLevelButton.onClick.AddListener(OnNextLevelClicked);
+        winRestartButton.onClick.AddListener(OnWinRestartClicked);
 
         HideLevelCompleteImmediate();
         SubscribeToEvents();
+        UpdateLevelText();
         UpdateLineCount(0, DrawingManager.Instance != null ? DrawingManager.Instance.MaxLines : 5);
     }
 
@@ -76,6 +78,14 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    private void UpdateLevelText()
+    {
+        if (GameManager.Instance != null)
+        {
+            levelText.text = "Level " + GameManager.Instance.SelectedLevel;
+        }
+    }
+
     private void UpdateLineCount(int current, int max)
     {
         lineCountText.text = current + " / " + max;
@@ -99,6 +109,8 @@ public class GameUI : MonoBehaviour
     private void HandleLevelReset()
     {
         HideLevelCompleteImmediate();
+        UpdateLevelText();
+        UpdateLineCount(0, DrawingManager.Instance != null ? DrawingManager.Instance.MaxLines : 5);
     }
 
     private void ShowLevelComplete()
@@ -113,6 +125,12 @@ public class GameUI : MonoBehaviour
         var textRect = levelCompleteText.GetComponent<RectTransform>();
         textRect.localScale = Vector3.one * 0.5f;
         textRect.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+
+        nextLevelButton.transform.localScale = Vector3.zero;
+        nextLevelButton.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetDelay(0.3f);
+
+        winRestartButton.transform.localScale = Vector3.zero;
+        winRestartButton.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetDelay(0.4f);
     }
 
     private void HideLevelCompleteImmediate()
@@ -145,6 +163,22 @@ public class GameUI : MonoBehaviour
         else
         {
             Debug.LogWarning("GameUI: No LevelController or DrawingManager found!");
+        }
+    }
+
+    private void OnNextLevelClicked()
+    {
+        if (LevelController.Instance != null)
+        {
+            LevelController.Instance.LoadNextLevel();
+        }
+    }
+
+    private void OnWinRestartClicked()
+    {
+        if (LevelController.Instance != null)
+        {
+            LevelController.Instance.ResetLevel();
         }
     }
 }

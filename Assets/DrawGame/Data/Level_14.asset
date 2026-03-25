@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107deb83bee6efd418d87ede22cbce68, type: 3}
+  m_Name: Level_14
+  m_EditorClassIdentifier: 
+  levelNumber: 14
+  maxLines: 2
+  objects:
+  - name: RampPlatform
+    objectType: 0
+    shape: 0
+    position: {x: -0.5, y: 0.4}
+    size: {x: 3.5, y: 0.3}
+    rotation: 15
+    color: {r: 0.4, g: 0.4, b: 0.45, a: 1}
+    isGoalTarget: 0
+    mass: 0
+    bounciness: 0
+  - name: Ball
+    objectType: 1
+    shape: 1
+    position: {x: -1.8, y: 1.9}
+    size: {x: 0.8, y: 0.8}
+    rotation: 0
+    color: {r: 1, g: 0.5, b: 0.2, a: 1}
+    isGoalTarget: 1
+    mass: 1
+    bounciness: 0.3
+  goalZone:
+    position: {x: 1.5, y: -3.5}
+    size: {x: 1.5, y: 1.2}
+    goalType: 0
+    holdDuration: 0
+    color: {r: 0.2, g: 0.9, b: 0.3, a: 0.4}

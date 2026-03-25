@@ -6,14 +6,13 @@ public class LevelController : MonoBehaviour
 {
     public static LevelController Instance { get; private set; }
 
-    [SerializeField] private GoalZone goalZone;
-    [SerializeField] private LevelObject[] levelObjects;
-
     public event Action OnLevelComplete;
     public event Action OnLevelReset;
 
     public bool IsComplete { get; private set; }
 
+    private GoalZone goalZone;
+    private LevelObject[] levelObjects;
     private float completionTime;
     private float levelStartTime;
 
@@ -25,9 +24,18 @@ public class LevelController : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    public void SetupLevel(GoalZone newGoalZone, LevelObject[] newLevelObjects)
     {
+        if (goalZone != null)
+        {
+            goalZone.OnGoalCompleted -= HandleGoalCompleted;
+        }
+
+        goalZone = newGoalZone;
+        levelObjects = newLevelObjects;
+        IsComplete = false;
         levelStartTime = Time.time;
+        completionTime = 0f;
 
         if (goalZone != null)
         {
@@ -36,7 +44,7 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("LevelController: goalZone is not assigned!");
+            Debug.LogWarning("LevelController: goalZone is null!");
         }
     }
 
@@ -57,6 +65,12 @@ public class LevelController : MonoBehaviour
         if (DrawingManager.Instance != null)
         {
             DrawingManager.Instance.SetInputEnabled(false);
+        }
+
+        int level = GameManager.Instance != null ? GameManager.Instance.SelectedLevel : 1;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.UnlockNextLevel(level);
         }
 
         DOVirtual.DelayedCall(0.5f, () =>
@@ -83,6 +97,33 @@ public class LevelController : MonoBehaviour
                 if (obj != null)
                     obj.ResetToInitial();
             }
+        }
+
+        if (DrawingManager.Instance != null)
+        {
+            DrawingManager.Instance.ClearAllLines();
+            DrawingManager.Instance.SetInputEnabled(true);
+        }
+
+        OnLevelReset?.Invoke();
+    }
+
+    public void LoadNextLevel()
+    {
+        int currentLevel = GameManager.Instance != null ? GameManager.Instance.SelectedLevel : 1;
+        int nextLevel = currentLevel + 1;
+
+        if (nextLevel > GameManager.TOTAL_LEVELS)
+        {
+            GameManager.Instance.LoadMainMenu();
+            return;
+        }
+
+        GameManager.Instance.SelectedLevel = nextLevel;
+
+        if (LevelSpawner.Instance != null)
+        {
+            LevelSpawner.Instance.SpawnLevel(nextLevel);
         }
 
         if (DrawingManager.Instance != null)

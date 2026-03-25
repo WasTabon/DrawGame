@@ -19,6 +19,12 @@ public class GoalZone : MonoBehaviour
     private float holdTimer;
     private bool targetInZone;
 
+    public void Init(GoalType type, float holdTime = 2f)
+    {
+        goalType = type;
+        holdDuration = holdTime;
+    }
+
     public void ResetGoal()
     {
         isCompleted = false;
