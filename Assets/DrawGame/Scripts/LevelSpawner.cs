@@ -10,10 +10,12 @@ public class LevelSpawner : MonoBehaviour
     private GameObject levelRoot;
     private List<LevelObject> spawnedObjects = new List<LevelObject>();
     private GoalZone spawnedGoalZone;
+    private HintDisplay spawnedHintDisplay;
     private LevelData currentLevelData;
 
     public GoalZone CurrentGoalZone => spawnedGoalZone;
     public LevelObject[] SpawnedObjects => spawnedObjects.ToArray();
+    public HintDisplay CurrentHintDisplay => spawnedHintDisplay;
 
     public LevelData GetCurrentLevelData()
     {
@@ -58,6 +60,11 @@ public class LevelSpawner : MonoBehaviour
         if (data.goalZone != null)
         {
             SpawnGoalZone(data.goalZone);
+        }
+
+        if (data.hintPoints != null && data.hintPoints.Length >= 2)
+        {
+            SpawnHintDisplay(data.hintPoints);
         }
 
         if (DrawingManager.Instance != null)
@@ -154,6 +161,15 @@ public class LevelSpawner : MonoBehaviour
         }
         spawnedObjects.Clear();
         spawnedGoalZone = null;
+        spawnedHintDisplay = null;
+    }
+
+    private void SpawnHintDisplay(Vector2[] hintPoints)
+    {
+        var go = new GameObject("HintDisplay");
+        go.transform.SetParent(levelRoot.transform);
+        spawnedHintDisplay = go.AddComponent<HintDisplay>();
+        spawnedHintDisplay.Initialize(hintPoints);
     }
 
     private Sprite CreateSquareSprite()

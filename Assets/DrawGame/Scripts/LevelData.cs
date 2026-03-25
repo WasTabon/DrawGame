@@ -42,4 +42,5 @@ public class LevelData : ScriptableObject
     public float idealTime = 15f;
     public LevelObjectData[] objects;
     public GoalZoneData goalZone;
+    public Vector2[] hintPoints;
 }

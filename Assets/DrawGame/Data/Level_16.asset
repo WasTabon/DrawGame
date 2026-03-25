@@ -15,7 +15,7 @@ MonoBehaviour:
   levelNumber: 16
   maxLines: 3
   idealLines: 1
-  idealTime: 9
+  idealTime: 10
   objects:
   - name: Platform
     objectType: 0
@@ -43,3 +43,9 @@ MonoBehaviour:
     goalType: 0
     holdDuration: 0
     color: {r: 0.2, g: 0.9, b: 0.3, a: 0.4}
+  hintPoints:
+  - {x: 0.6, y: 1.5}
+  - {x: 0.10000001, y: 1.3}
+  - {x: -0.39999998, y: 1}
+  - {x: -0.90000004, y: 0.5}
+  - {x: -1.2, y: 0}

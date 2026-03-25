@@ -13,35 +13,15 @@ MonoBehaviour:
   m_Name: Level_05
   m_EditorClassIdentifier: 
   levelNumber: 5
-  maxLines: 3
-  idealLines: 2
-  idealTime: 15
+  maxLines: 2
+  idealLines: 1
+  idealTime: 12
   objects:
-  - name: CupLeft
+  - name: Platform
     objectType: 0
     shape: 0
-    position: {x: -1.3, y: -1}
-    size: {x: 0.3, y: 2.5}
-    rotation: 0
-    color: {r: 0.5, g: 0.45, b: 0.4, a: 1}
-    isGoalTarget: 0
-    mass: 0
-    bounciness: 0
-  - name: CupRight
-    objectType: 0
-    shape: 0
-    position: {x: 0.3, y: -1}
-    size: {x: 0.3, y: 2.5}
-    rotation: 0
-    color: {r: 0.5, g: 0.45, b: 0.4, a: 1}
-    isGoalTarget: 0
-    mass: 0
-    bounciness: 0
-  - name: CupBottom
-    objectType: 0
-    shape: 0
-    position: {x: -0.5, y: -2.3}
-    size: {x: 1.9, y: 0.3}
+    position: {x: 1, y: 0.5}
+    size: {x: 1.5, y: 0.3}
     rotation: 0
     color: {r: 0.4, g: 0.4, b: 0.45, a: 1}
     isGoalTarget: 0
@@ -50,16 +30,20 @@ MonoBehaviour:
   - name: Ball
     objectType: 1
     shape: 1
-    position: {x: -0.5, y: -1.2}
-    size: {x: 0.7, y: 0.7}
+    position: {x: 1, y: 1.5}
+    size: {x: 0.8, y: 0.8}
     rotation: 0
     color: {r: 1, g: 0.5, b: 0.2, a: 1}
     isGoalTarget: 1
     mass: 1
     bounciness: 0.3
   goalZone:
-    position: {x: 1.8, y: -3.5}
-    size: {x: 1.2, y: 1.2}
+    position: {x: -1.2, y: -3.5}
+    size: {x: 2, y: 1.5}
     goalType: 0
     holdDuration: 0
     color: {r: 0.2, g: 0.9, b: 0.3, a: 0.4}
+  hintPoints:
+  - {x: 0.5, y: 2.5}
+  - {x: 0.8, y: 2.2}
+  - {x: 1.2, y: 2}

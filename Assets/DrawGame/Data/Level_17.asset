@@ -53,3 +53,8 @@ MonoBehaviour:
     goalType: 0
     holdDuration: 0
     color: {r: 0.2, g: 0.9, b: 0.3, a: 0.4}
+  hintPoints:
+  - {x: 1.1, y: 3.5}
+  - {x: 0.6, y: 3.3}
+  - {x: 0.10000001, y: 3.5}
+  - {x: -0.39999998, y: 3.3}

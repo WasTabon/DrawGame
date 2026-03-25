@@ -14,6 +14,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button winRestartButton;
     [SerializeField] private TextMeshProUGUI[] starTexts;
+    [SerializeField] private Button hintButton;
+    [SerializeField] private TextMeshProUGUI hintCountText;
 
     private void OnEnable()
     {
@@ -36,16 +38,20 @@ public class GameUI : MonoBehaviour
         Debug.Assert(nextLevelButton != null, "GameUI: nextLevelButton not assigned!");
         Debug.Assert(winRestartButton != null, "GameUI: winRestartButton not assigned!");
         Debug.Assert(starTexts != null && starTexts.Length == 3, "GameUI: starTexts must have 3 elements!");
+        Debug.Assert(hintButton != null, "GameUI: hintButton not assigned!");
+        Debug.Assert(hintCountText != null, "GameUI: hintCountText not assigned!");
 
         backButton.onClick.AddListener(OnBackClicked);
         restartButton.onClick.AddListener(OnRestartClicked);
         nextLevelButton.onClick.AddListener(OnNextLevelClicked);
         winRestartButton.onClick.AddListener(OnWinRestartClicked);
+        hintButton.onClick.AddListener(OnHintClicked);
 
         HideLevelCompleteImmediate();
         SubscribeToEvents();
         UpdateLevelText();
         UpdateLineCount(0, DrawingManager.Instance != null ? DrawingManager.Instance.MaxLines : 5);
+        UpdateHintCount();
     }
 
     private void SubscribeToEvents()
@@ -64,6 +70,12 @@ public class GameUI : MonoBehaviour
             LevelController.Instance.OnLevelReset -= HandleLevelReset;
             LevelController.Instance.OnLevelReset += HandleLevelReset;
         }
+
+        if (HintManager.Instance != null)
+        {
+            HintManager.Instance.OnHintCountChanged -= HandleHintCountChanged;
+            HintManager.Instance.OnHintCountChanged += HandleHintCountChanged;
+        }
     }
 
     private void UnsubscribeFromEvents()
@@ -77,6 +89,11 @@ public class GameUI : MonoBehaviour
         {
             LevelController.Instance.OnLevelComplete -= HandleLevelComplete;
             LevelController.Instance.OnLevelReset -= HandleLevelReset;
+        }
+
+        if (HintManager.Instance != null)
+        {
+            HintManager.Instance.OnHintCountChanged -= HandleHintCountChanged;
         }
     }
 
@@ -101,6 +118,19 @@ public class GameUI : MonoBehaviour
         {
             lineCountText.color = Color.white;
         }
+    }
+
+    private void UpdateHintCount()
+    {
+        int count = HintManager.Instance != null ? HintManager.Instance.HintCount : 0;
+        hintCountText.text = count.ToString();
+        hintButton.interactable = count > 0;
+    }
+
+    private void HandleHintCountChanged(int newCount)
+    {
+        hintCountText.text = newCount.ToString();
+        hintButton.interactable = newCount > 0;
     }
 
     private void HandleLevelComplete(int stars)
@@ -219,6 +249,39 @@ public class GameUI : MonoBehaviour
         if (LevelController.Instance != null)
         {
             LevelController.Instance.ResetLevel();
+        }
+    }
+
+    private void OnHintClicked()
+    {
+        if (LevelController.Instance != null && LevelController.Instance.IsComplete) return;
+
+        if (HintManager.Instance == null)
+        {
+            Debug.LogWarning("GameUI: HintManager not found!");
+            return;
+        }
+
+        if (HintManager.Instance.HintCount <= 0)
+        {
+            hintButton.transform.DOShakePosition(0.3f, 5f, 15).SetEase(Ease.OutQuad);
+            return;
+        }
+
+        if (LevelSpawner.Instance == null || LevelSpawner.Instance.CurrentHintDisplay == null)
+        {
+            Debug.LogWarning("GameUI: No hint available for this level!");
+            return;
+        }
+
+        if (HintManager.Instance.UseHint())
+        {
+            hintButton.transform.DOScale(0.85f, 0.08f).SetEase(Ease.InQuad).OnComplete(() =>
+            {
+                hintButton.transform.DOScale(1f, 0.08f).SetEase(Ease.OutQuad);
+            });
+
+            LevelSpawner.Instance.CurrentHintDisplay.ShowHint(3f);
         }
     }
 }

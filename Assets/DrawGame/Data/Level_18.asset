@@ -15,23 +15,13 @@ MonoBehaviour:
   levelNumber: 18
   maxLines: 3
   idealLines: 1
-  idealTime: 12
+  idealTime: 10
   objects:
-  - name: Wall
+  - name: Platform
     objectType: 0
     shape: 0
-    position: {x: 0.3, y: -1}
-    size: {x: 0.3, y: 3}
-    rotation: -0
-    color: {r: 0.5, g: 0.45, b: 0.4, a: 1}
-    isGoalTarget: 0
-    mass: 0
-    bounciness: 0
-  - name: BallPlatform
-    objectType: 0
-    shape: 0
-    position: {x: 1.8, y: -2}
-    size: {x: 1.8, y: 0.3}
+    position: {x: 0.3, y: 0}
+    size: {x: 2, y: 0.3}
     rotation: -0
     color: {r: 0.4, g: 0.4, b: 0.45, a: 1}
     isGoalTarget: 0
@@ -40,7 +30,7 @@ MonoBehaviour:
   - name: Ball
     objectType: 1
     shape: 1
-    position: {x: 1.8, y: -1}
+    position: {x: 0.3, y: 1}
     size: {x: 0.8, y: 0.8}
     rotation: -0
     color: {r: 1, g: 0.5, b: 0.2, a: 1}
@@ -48,8 +38,12 @@ MonoBehaviour:
     mass: 1
     bounciness: 0.3
   goalZone:
-    position: {x: -1.2, y: -3.5}
-    size: {x: 1.5, y: 1.2}
+    position: {x: 0.3, y: -3.5}
+    size: {x: 2.5, y: 1.5}
     goalType: 0
     holdDuration: 0
     color: {r: 0.2, g: 0.9, b: 0.3, a: 0.4}
+  hintPoints:
+  - {x: 0.6, y: 2}
+  - {x: 0.3, y: 1.8}
+  - {x: 0, y: 2}
