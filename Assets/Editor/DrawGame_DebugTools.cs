@@ -16,7 +16,7 @@ public class DrawGame_DebugTools
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        Debug.Log("All progress reset");
+        Debug.Log("All progress reset (including tutorial)");
     }
 
     [MenuItem("DrawGame/Debug/Unlock All Levels")]
@@ -34,5 +34,13 @@ public class DrawGame_DebugTools
         PlayerPrefs.SetInt("HintCount", current + 10);
         PlayerPrefs.Save();
         Debug.Log("Added 10 hints. Total: " + (current + 10));
+    }
+
+    [MenuItem("DrawGame/Debug/Reset Tutorial")]
+    public static void ResetTutorial()
+    {
+        PlayerPrefs.SetInt("TutorialShown", 0);
+        PlayerPrefs.Save();
+        Debug.Log("Tutorial reset - will show on next MainMenu load");
     }
 }

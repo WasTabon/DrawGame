@@ -7,6 +7,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private CanvasGroup mainMenuPanel;
     [SerializeField] private CanvasGroup levelSelectPanel;
     [SerializeField] private Button playButton;
+    [SerializeField] private TutorialUI tutorialUI;
 
     private void Start()
     {
@@ -16,13 +17,45 @@ public class MainMenuUI : MonoBehaviour
 
         playButton.onClick.AddListener(OnPlayClicked);
 
-        mainMenuPanel.alpha = 1f;
-        mainMenuPanel.interactable = true;
-        mainMenuPanel.blocksRaycasts = true;
-
         levelSelectPanel.alpha = 0f;
         levelSelectPanel.interactable = false;
         levelSelectPanel.blocksRaycasts = false;
+
+        if (tutorialUI != null && !TutorialUI.HasBeenShown())
+        {
+            mainMenuPanel.alpha = 0f;
+            mainMenuPanel.interactable = false;
+            mainMenuPanel.blocksRaycasts = false;
+
+            tutorialUI.OnTutorialComplete -= OnTutorialComplete;
+            tutorialUI.OnTutorialComplete += OnTutorialComplete;
+            tutorialUI.Show();
+        }
+        else
+        {
+            mainMenuPanel.alpha = 1f;
+            mainMenuPanel.interactable = true;
+            mainMenuPanel.blocksRaycasts = true;
+            AnimateEntrance();
+        }
+    }
+
+    private void OnTutorialComplete()
+    {
+        if (tutorialUI != null)
+        {
+            tutorialUI.OnTutorialComplete -= OnTutorialComplete;
+        }
+
+        mainMenuPanel.alpha = 0f;
+        mainMenuPanel.interactable = false;
+        mainMenuPanel.blocksRaycasts = false;
+
+        mainMenuPanel.DOFade(1f, 0.4f).SetEase(Ease.OutQuad).OnComplete(() =>
+        {
+            mainMenuPanel.interactable = true;
+            mainMenuPanel.blocksRaycasts = true;
+        });
 
         AnimateEntrance();
     }
