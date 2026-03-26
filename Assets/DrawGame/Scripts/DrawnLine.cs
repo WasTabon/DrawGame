@@ -30,6 +30,11 @@ public class DrawnLine : MonoBehaviour
         points.Add(point);
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPosition(points.Count - 1, new Vector3(point.x, point.y, 0f));
+
+        if (ParticleSpawner.Instance != null)
+        {
+            ParticleSpawner.Instance.EmitDrawTrail(new Vector3(point.x, point.y, 0f));
+        }
     }
 
     public Vector2 GetLastPoint()
@@ -58,6 +63,17 @@ public class DrawnLine : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
+        if (ParticleSpawner.Instance != null)
+        {
+            ParticleSpawner.Instance.EmitFreezeBurst(transform.position);
+        }
+
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.ShakeLight();
+        }
+
+        HapticFeedback.Light();
         AnimateFreeze();
     }
 

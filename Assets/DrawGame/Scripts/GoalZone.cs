@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using DG.Tweening;
 
 public enum GoalType
 {
@@ -18,6 +19,7 @@ public class GoalZone : MonoBehaviour
     private bool isCompleted;
     private float holdTimer;
     private bool targetInZone;
+    private Tween pulseTween;
 
     public void Init(GoalType type, float holdTime = 2f)
     {
@@ -25,11 +27,25 @@ public class GoalZone : MonoBehaviour
         holdDuration = holdTime;
     }
 
+    private void Start()
+    {
+        StartPulse();
+    }
+
+    private void StartPulse()
+    {
+        if (pulseTween != null) pulseTween.Kill();
+        pulseTween = transform.DOScale(transform.localScale * 1.05f, 0.8f)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
+
     public void ResetGoal()
     {
         isCompleted = false;
         holdTimer = 0f;
         targetInZone = false;
+        StartPulse();
     }
 
     private void Update()
@@ -109,6 +125,24 @@ public class GoalZone : MonoBehaviour
     {
         if (isCompleted) return;
         isCompleted = true;
+
+        if (pulseTween != null) pulseTween.Kill();
+
+        transform.DOScale(transform.localScale * 1.2f, 0.3f).SetEase(Ease.OutBack).OnComplete(() =>
+        {
+            transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.InBack);
+        });
+
+        if (ParticleSpawner.Instance != null)
+        {
+            ParticleSpawner.Instance.EmitGoalGlow(transform.position);
+        }
+
         OnGoalCompleted?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        if (pulseTween != null) pulseTween.Kill();
     }
 }

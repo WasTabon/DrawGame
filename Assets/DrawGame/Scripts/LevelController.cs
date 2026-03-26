@@ -92,10 +92,27 @@ public class LevelController : MonoBehaviour
             GameManager.Instance.SetStars(level, earnedStars);
         }
 
+        PlayWinEffects();
+
         DOVirtual.DelayedCall(0.5f, () =>
         {
             OnLevelComplete?.Invoke(earnedStars);
         });
+    }
+
+    private void PlayWinEffects()
+    {
+        if (ParticleSpawner.Instance != null)
+        {
+            ParticleSpawner.Instance.EmitWinConfetti(Camera.main.transform.position);
+        }
+
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.ShakeMedium();
+        }
+
+        HapticFeedback.Success();
     }
 
     public void ResetLevel()
