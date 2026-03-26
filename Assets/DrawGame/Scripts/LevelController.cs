@@ -112,6 +112,11 @@ public class LevelController : MonoBehaviour
             CameraShake.Instance.ShakeMedium();
         }
 
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayWin();
+        }
+
         HapticFeedback.Success();
     }
 

@@ -46,6 +46,12 @@ public class MainMenuUI : MonoBehaviour
     private void OnPlayClicked()
     {
         playButton.interactable = false;
+
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayClick();
+        }
+
         SwitchToLevelSelect();
     }
 
@@ -64,6 +70,11 @@ public class MainMenuUI : MonoBehaviour
 
     public void SwitchToMainMenu()
     {
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayClick();
+        }
+
         levelSelectPanel.DOFade(0f, 0.3f).SetEase(Ease.InQuad);
         levelSelectPanel.interactable = false;
         levelSelectPanel.blocksRaycasts = false;

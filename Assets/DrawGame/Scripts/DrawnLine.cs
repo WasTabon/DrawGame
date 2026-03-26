@@ -7,6 +7,7 @@ public class DrawnLine : MonoBehaviour
     private LineRenderer lineRenderer;
     private List<Vector2> points = new List<Vector2>();
     private bool isFrozen;
+    private int drawSfxCounter;
 
     public int PointCount => points.Count;
 
@@ -34,6 +35,12 @@ public class DrawnLine : MonoBehaviour
         if (ParticleSpawner.Instance != null)
         {
             ParticleSpawner.Instance.EmitDrawTrail(new Vector3(point.x, point.y, 0f));
+        }
+
+        drawSfxCounter++;
+        if (drawSfxCounter % 4 == 0 && SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayDraw();
         }
     }
 
@@ -71,6 +78,11 @@ public class DrawnLine : MonoBehaviour
         if (CameraShake.Instance != null)
         {
             CameraShake.Instance.ShakeLight();
+        }
+
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayFreeze();
         }
 
         HapticFeedback.Light();

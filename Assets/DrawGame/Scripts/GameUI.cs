@@ -113,6 +113,11 @@ public class GameUI : MonoBehaviour
         {
             lineCountText.color = new Color(1f, 0.4f, 0.4f, 1f);
             lineCountText.transform.DOShakePosition(0.3f, 5f, 15).SetEase(Ease.OutQuad);
+
+            if (SFXManager.Instance != null)
+            {
+                SFXManager.Instance.PlayError();
+            }
         }
         else
         {
@@ -179,6 +184,7 @@ public class GameUI : MonoBehaviour
             star.color = earned ? activeColor : inactiveColor;
 
             float delay = 0.4f + i * 0.2f;
+            int starIndex = i;
             star.transform.DOScale(earned ? Vector3.one * 1.3f : Vector3.one * 0.8f, 0.35f)
                 .SetEase(Ease.OutBack)
                 .SetDelay(delay)
@@ -187,6 +193,11 @@ public class GameUI : MonoBehaviour
                     if (earned)
                     {
                         star.transform.DOScale(Vector3.one, 0.15f).SetEase(Ease.InOutQuad);
+
+                        if (SFXManager.Instance != null)
+                        {
+                            SFXManager.Instance.PlayStar();
+                        }
                     }
                 });
         }
@@ -210,11 +221,21 @@ public class GameUI : MonoBehaviour
 
     private void OnBackClicked()
     {
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayClick();
+        }
+
         GameManager.Instance.LoadMainMenu();
     }
 
     private void OnRestartClicked()
     {
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayClick();
+        }
+
         restartButton.transform.DOScale(0.85f, 0.08f).SetEase(Ease.InQuad).OnComplete(() =>
         {
             restartButton.transform.DOScale(1f, 0.08f).SetEase(Ease.OutQuad);
@@ -236,6 +257,11 @@ public class GameUI : MonoBehaviour
 
     private void OnNextLevelClicked()
     {
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayClick();
+        }
+
         if (LevelController.Instance != null)
         {
             LevelController.Instance.LoadNextLevel();
@@ -244,6 +270,11 @@ public class GameUI : MonoBehaviour
 
     private void OnWinRestartClicked()
     {
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayClick();
+        }
+
         if (LevelController.Instance != null)
         {
             LevelController.Instance.ResetLevel();
@@ -264,10 +295,18 @@ public class GameUI : MonoBehaviour
         {
             if (IAPManager.Instance != null)
             {
+                if (SFXManager.Instance != null)
+                {
+                    SFXManager.Instance.PlayClick();
+                }
                 IAPManager.Instance.Show();
             }
             else
             {
+                if (SFXManager.Instance != null)
+                {
+                    SFXManager.Instance.PlayError();
+                }
                 hintButton.transform.DOShakePosition(0.3f, 5f, 15).SetEase(Ease.OutQuad);
             }
             return;
@@ -281,6 +320,11 @@ public class GameUI : MonoBehaviour
 
         if (HintManager.Instance.UseHint())
         {
+            if (SFXManager.Instance != null)
+            {
+                SFXManager.Instance.PlayClick();
+            }
+
             hintButton.transform.DOScale(0.85f, 0.08f).SetEase(Ease.InQuad).OnComplete(() =>
             {
                 hintButton.transform.DOScale(1f, 0.08f).SetEase(Ease.OutQuad);

@@ -50,6 +50,11 @@ public class LevelButton : MonoBehaviour
     {
         if (!isUnlocked) return;
 
+        if (SFXManager.Instance != null)
+        {
+            SFXManager.Instance.PlayClick();
+        }
+
         transform.DOScale(0.9f, 0.08f).SetEase(Ease.InQuad).OnComplete(() =>
         {
             transform.DOScale(1f, 0.08f).SetEase(Ease.OutQuad).OnComplete(() =>
