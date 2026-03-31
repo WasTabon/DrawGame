@@ -21,7 +21,7 @@ MonoBehaviour:
     objectType: 0
     shape: 0
     position: {x: 0, y: 0.3}
-    size: {x: 2, y: 0.3}
+    size: {x: 2, y: 2}
     rotation: 0
     color: {r: 0.4, g: 0.4, b: 0.45, a: 1}
     isGoalTarget: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     bounciness: 0.3
   goalZone:
     position: {x: 0, y: -3.5}
-    size: {x: 2.5, y: 1.5}
+    size: {x: 2.5, y: 2.5}
     goalType: 0
     holdDuration: 0
     color: {r: 0.2, g: 0.9, b: 0.3, a: 0.4}

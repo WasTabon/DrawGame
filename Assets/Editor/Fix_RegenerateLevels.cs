@@ -90,7 +90,7 @@ public class Fix_RegenerateLevels
                 objectType = LevelObjectType.Static,
                 shape = LevelObjectShape.Box,
                 position = new Vector2(-0.5f, -1f),
-                size = new Vector2(3f, 0.3f),
+                size = new Vector2(3f, 3f),
                 color = platformColor
             },
             new LevelObjectData
@@ -109,7 +109,7 @@ public class Fix_RegenerateLevels
         data.goalZone = new GoalZoneData
         {
             position = new Vector2(1.5f, -3.5f),
-            size = new Vector2(1.5f, 1.2f),
+            size = new Vector2(1.5f, 1.5f),
             goalType = GoalType.ReachZone,
             color = goalColor
         };
@@ -128,7 +128,7 @@ public class Fix_RegenerateLevels
                 objectType = LevelObjectType.Static,
                 shape = LevelObjectShape.Box,
                 position = new Vector2(0f, 2f),
-                size = new Vector2(2.5f, 0.3f),
+                size = new Vector2(2.5f, 2.5f),
                 color = platformColor
             },
             new LevelObjectData
@@ -149,14 +149,14 @@ public class Fix_RegenerateLevels
                 objectType = LevelObjectType.Static,
                 shape = LevelObjectShape.Box,
                 position = new Vector2(0f, -0.5f),
-                size = new Vector2(2f, 0.3f),
+                size = new Vector2(2f, 2f),
                 color = wallColor
             }
         };
         data.goalZone = new GoalZoneData
         {
             position = new Vector2(0f, -3.5f),
-            size = new Vector2(2f, 1.2f),
+            size = new Vector2(2f, 2f),
             goalType = GoalType.ReachZone,
             color = goalColor
         };
@@ -175,7 +175,7 @@ public class Fix_RegenerateLevels
                 objectType = LevelObjectType.Static,
                 shape = LevelObjectShape.Box,
                 position = new Vector2(0f, 0f),
-                size = new Vector2(2f, 0.3f),
+                size = new Vector2(2f, 2f),
                 color = platformColor
             },
             new LevelObjectData
@@ -194,7 +194,7 @@ public class Fix_RegenerateLevels
         data.goalZone = new GoalZoneData
         {
             position = new Vector2(0f, -3.5f),
-            size = new Vector2(2.5f, 1.5f),
+            size = new Vector2(2.5f, 2.5f),
             goalType = GoalType.ReachZone,
             color = goalColor
         };
@@ -213,7 +213,7 @@ public class Fix_RegenerateLevels
                 objectType = LevelObjectType.Static,
                 shape = LevelObjectShape.Box,
                 position = new Vector2(-1f, 0.5f),
-                size = new Vector2(1.5f, 0.3f),
+                size = new Vector2(1.5f, 1.5f),
                 color = platformColor
             },
             new LevelObjectData
@@ -232,7 +232,7 @@ public class Fix_RegenerateLevels
         data.goalZone = new GoalZoneData
         {
             position = new Vector2(1.2f, -3.5f),
-            size = new Vector2(2f, 1.5f),
+            size = new Vector2(2f, 2f),
             goalType = GoalType.ReachZone,
             color = goalColor
         };
@@ -251,7 +251,7 @@ public class Fix_RegenerateLevels
                 objectType = LevelObjectType.Static,
                 shape = LevelObjectShape.Box,
                 position = new Vector2(1f, 0.5f),
-                size = new Vector2(1.5f, 0.3f),
+                size = new Vector2(1.5f, 1.5f),
                 color = platformColor
             },
             new LevelObjectData
@@ -270,7 +270,7 @@ public class Fix_RegenerateLevels
         data.goalZone = new GoalZoneData
         {
             position = new Vector2(-1.2f, -3.5f),
-            size = new Vector2(2f, 1.5f),
+            size = new Vector2(2f, 2f),
             goalType = GoalType.ReachZone,
             color = goalColor
         };
