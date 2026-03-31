@@ -7,6 +7,11 @@ public class LevelSpawner : MonoBehaviour
 
     [SerializeField] private LevelDatabase levelDatabase;
 
+    [Header("Custom Sprites (optional - leave empty for default)")]
+    [SerializeField] private Sprite boxSprite;
+    [SerializeField] private Sprite circleSprite;
+    [SerializeField] private Sprite goalSprite;
+
     private GameObject levelRoot;
     private List<LevelObject> spawnedObjects = new List<LevelObject>();
     private GoalZone spawnedGoalZone;
@@ -92,14 +97,14 @@ public class LevelSpawner : MonoBehaviour
 
         if (data.shape == LevelObjectShape.Circle)
         {
-            sr.sprite = CreateCircleSprite();
+            sr.sprite = circleSprite != null ? circleSprite : CreateCircleSprite();
             float diameter = data.size.x;
             go.transform.localScale = new Vector3(diameter, diameter, 1f);
             go.AddComponent<CircleCollider2D>();
         }
         else
         {
-            sr.sprite = CreateSquareSprite();
+            sr.sprite = boxSprite != null ? boxSprite : CreateSquareSprite();
             go.transform.localScale = new Vector3(data.size.x, data.size.y, 1f);
             go.AddComponent<BoxCollider2D>();
         }
@@ -140,7 +145,7 @@ public class LevelSpawner : MonoBehaviour
         go.transform.position = new Vector3(data.position.x, data.position.y, 0f);
 
         var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = CreateSquareSprite();
+        sr.sprite = goalSprite != null ? goalSprite : CreateSquareSprite();
         sr.color = data.color;
         sr.sortingOrder = 0;
         go.transform.localScale = new Vector3(data.size.x, data.size.y, 1f);
