@@ -14,9 +14,9 @@ public class LevelButton : MonoBehaviour
     private int level;
     private bool isUnlocked;
 
-    private Color unlockedColor = new Color(0.3f, 0.7f, 1f, 1f);
+    private Color unlockedColor = new Color(255f, 255f, 255f, 255f);
     private Color lockedColor = new Color(0.3f, 0.3f, 0.35f, 1f);
-    private Color completedColor = new Color(0.3f, 0.85f, 0.5f, 1f);
+    private Color completedColor = new Color(255f, 255f, 255f, 255f);
 
     public void Setup(int levelNumber)
     {
