@@ -13,7 +13,12 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelCompleteText;
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button winRestartButton;
-    [SerializeField] private TextMeshProUGUI[] starTexts;
+
+    [Header("Stars")]
+    [SerializeField] private Image[] starImages;
+    [SerializeField] private Sprite starActiveSprite;
+    [SerializeField] private Sprite starInactiveSprite;
+
     [SerializeField] private Button hintButton;
     [SerializeField] private TextMeshProUGUI hintCountText;
 
@@ -37,7 +42,9 @@ public class GameUI : MonoBehaviour
         Debug.Assert(levelCompleteText != null, "GameUI: levelCompleteText not assigned!");
         Debug.Assert(nextLevelButton != null, "GameUI: nextLevelButton not assigned!");
         Debug.Assert(winRestartButton != null, "GameUI: winRestartButton not assigned!");
-        Debug.Assert(starTexts != null && starTexts.Length == 3, "GameUI: starTexts must have 3 elements!");
+        Debug.Assert(starImages != null && starImages.Length == 3, "GameUI: starImages must have 3 elements!");
+        Debug.Assert(starActiveSprite != null, "GameUI: starActiveSprite not assigned!");
+        Debug.Assert(starInactiveSprite != null, "GameUI: starInactiveSprite not assigned!");
         Debug.Assert(hintButton != null, "GameUI: hintButton not assigned!");
         Debug.Assert(hintCountText != null, "GameUI: hintCountText not assigned!");
 
@@ -172,19 +179,16 @@ public class GameUI : MonoBehaviour
 
     private void AnimateStars(int count)
     {
-        Color activeColor = new Color(1f, 0.85f, 0.2f, 1f);
-        Color inactiveColor = new Color(0.4f, 0.4f, 0.4f, 0.5f);
-
-        for (int i = 0; i < starTexts.Length; i++)
+        for (int i = 0; i < starImages.Length; i++)
         {
-            var star = starTexts[i];
+            var star = starImages[i];
             star.transform.localScale = Vector3.zero;
 
             bool earned = i < count;
-            star.color = earned ? activeColor : inactiveColor;
+            star.sprite = earned ? starActiveSprite : starInactiveSprite;
+            star.color = Color.white;
 
             float delay = 0.4f + i * 0.2f;
-            int starIndex = i;
             star.transform.DOScale(earned ? Vector3.one * 1.3f : Vector3.one * 0.8f, 0.35f)
                 .SetEase(Ease.OutBack)
                 .SetDelay(delay)
@@ -209,9 +213,9 @@ public class GameUI : MonoBehaviour
         levelCompletePanel.interactable = false;
         levelCompletePanel.blocksRaycasts = false;
 
-        if (starTexts != null)
+        if (starImages != null)
         {
-            foreach (var star in starTexts)
+            foreach (var star in starImages)
             {
                 if (star != null)
                     star.transform.localScale = Vector3.zero;
